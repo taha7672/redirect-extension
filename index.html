@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OAuth Redirect</title>
+    <script>
+      // Extract query parameters from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get("code"); // Get the authorization code
+      const locationId = urlParams.get("locationId"); // Get the location ID (if provided)
+
+      console.log("Received from GHL:", { code, locationId }); // Debugging output
+
+      // Redirect to the Chrome extension with the code and locationId as query parameters
+      if (code) {
+        window.location.href = `chrome-extension://blpebchmplfebncbfkoibjbhjnjicfbm/oauth.html?code=${code}&locationId=${locationId}&fullUrl=${window.location.href}`;
+      } else {
+        console.error("Authorization code not found in URL");
+        document.body.innerText =
+          "Error: Authorization code not found. Please try again.";
+      }
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
